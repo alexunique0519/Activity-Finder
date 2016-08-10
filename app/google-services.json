@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "436519355830",
+    "firebase_url": "https://project-6933251902387239369.firebaseio.com",
+    "project_id": "project-6933251902387239369",
+    "storage_bucket": "project-6933251902387239369.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436519355830:android:70418523451f6a5e",
+        "android_client_info": {
+          "package_name": "com.example.alex.activityfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436519355830-foclc5os688bbu0hq4n0s8dgsiunr7oe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByxw2ipp2rFalPiMiJQDMqPpFiaDZ9XFY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
