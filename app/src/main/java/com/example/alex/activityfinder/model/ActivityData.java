@@ -1,7 +1,12 @@
 package com.example.alex.activityfinder.model;
 
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -10,7 +15,7 @@ import java.util.List;
 /**
  * Created by Alex on 2016-07-25.
  */
-public class ActivityData {
+public class ActivityData implements Parcelable{
 
     private String activityName;
     private String activityOwner;
@@ -22,9 +27,10 @@ public class ActivityData {
     private String location_line1;
     private String location_line2;
     private Date date;
+    private String uniqueKey;
     private ArrayList<JoinMessage> joinMessagesList;
 
-    public ActivityData(String activityName, String activityOwner, String description, Bitmap bmp, float longitude, float latitude, String location1, String location2, Date date) {
+    public ActivityData(String key, String activityName, String activityOwner, String description, Bitmap bmp, float longitude, float latitude, String location1, String location2, Date date) {
         this.activityName = activityName;
         this.activityOwner = activityOwner;
         this.description = description;
@@ -36,6 +42,7 @@ public class ActivityData {
         this.date = date;
         joinMessagesList = new ArrayList<JoinMessage>();
         this.imageString = "";
+        this.uniqueKey = key;
     }
 
     public ActivityData() {
@@ -50,7 +57,24 @@ public class ActivityData {
         this.date = null;
         joinMessagesList = new ArrayList<JoinMessage>();
         this.imageString = null;
+        this.uniqueKey = null;
     }
+
+    protected ActivityData(Parcel in) {
+        activityName = in.readString();
+        activityOwner = in.readString();
+        description = in.readString();
+        bmp = in.readParcelable(Bitmap.class.getClassLoader());
+        imageString = in.readString();
+        longitude = in.readFloat();
+        latitude = in.readFloat();
+        location_line1 = in.readString();
+        location_line2 = in.readString();
+        uniqueKey = in.readString();
+        in.readTypedList(joinMessagesList, JoinMessage.CREATOR);
+    }
+
+
 
     public String getActivityName() {
         return activityName;
@@ -128,7 +152,55 @@ public class ActivityData {
         this.date = date;
     }
 
+    public String getUniqueKey(){return this.uniqueKey;}
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+       /*
+         private String activityName;
+    private String activityOwner;
+    private String description;
+    private Bitmap bmp;
+    private String imageString;
+    private float longitude;
+    private float latitude;
+    private String location_line1;
+    private String location_line2;
+    private Date date;
+    private String uniqueKey;
+    private ArrayList<JoinMessage> joinMessagesList;
+       * */
+        dest.writeString(activityName);
+        dest.writeString(activityOwner);
+        dest.writeString(description);
+        dest.writeValue(bmp);
+        dest.writeString(imageString);
+        dest.writeFloat(longitude);
+        dest.writeFloat(latitude);
+        dest.writeString(location_line1);
+        dest.writeString(location_line2);
+        dest.writeLong(date.getTime());
+        dest.writeString(uniqueKey);
+
+       dest.writeTypedList(joinMessagesList);
+    }
+
+    public static final Creator<ActivityData> CREATOR = new Creator<ActivityData>() {
+        @Override
+        public ActivityData createFromParcel(Parcel in) {
+            return new ActivityData(in);
+        }
+
+        @Override
+        public ActivityData[] newArray(int size) {
+            return new ActivityData[size];
+        }
+    };
 }
 
 

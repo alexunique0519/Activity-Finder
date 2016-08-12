@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -180,12 +182,27 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    //calculate the distance between the current location and activity location
+    private boolean isInAvaibleDistance()
+    {
+        return true;
+    }
+
+    //filter function to get the activity which in the distance range
+    private void filterActivity(List<ActivityData> list){
+        int nSize = list.size();
+        for (int i=0; i<nSize; i++){
+
+        }
+    }
     private void previewFirebaseStoredImage(){
         firebaseRef = new Firebase("https://project-6933251902387239369.firebaseio.com/Activities");
          firebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                ArrayList<ActivityData> tempList = new ArrayList<ActivityData>();
                 //get all the activity data from firebase
                 for (DataSnapshot child : dataSnapshot.getChildren()){
                     ActivityData data = child.getValue(ActivityData.class);
@@ -197,7 +214,7 @@ public class MainActivity extends AppCompatActivity
                     //generate the image using the imageString
                     byte[] imageAsBytes = Base64.decode(base64Image.getBytes(), Base64.DEFAULT);
                     data.setImage(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
-                    ActivityList.add(data);
+                    tempList.add(data);
                 }
 
 
@@ -360,6 +377,12 @@ public class MainActivity extends AppCompatActivity
             finish();
 
         } else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(MainActivity.this, MyOwnActivity_Activity.class);
+            //Bundle bundle = new Bundle();
+            //bundle.putParcelableArrayList("my_activities", (ArrayList<? extends Parcelable>) ActivityList);
+            //intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_slideshow) {
 

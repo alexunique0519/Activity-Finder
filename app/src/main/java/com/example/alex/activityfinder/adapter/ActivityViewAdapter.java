@@ -17,6 +17,7 @@ import com.example.alex.activityfinder.MainActivity;
 import com.example.alex.activityfinder.R;
 import com.example.alex.activityfinder.model.ActivityData;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -63,7 +64,11 @@ public class ActivityViewAdapter extends BaseAdapter {
             rowView = inflater.inflate(R.layout.item, parent, false);
             // configure view holder
             viewHolder = new ViewHolder();
-            viewHolder.DataText = (TextView) rowView.findViewById(R.id.bookText);
+            viewHolder.nameText = (TextView) rowView.findViewById(R.id.main_activity_name);
+            viewHolder.descriptionText = (TextView)rowView.findViewById(R.id.main_description);
+            viewHolder.timeText = (TextView)rowView.findViewById(R.id.main_activity_time);
+            viewHolder.locationText1 = (TextView)rowView.findViewById(R.id.main_activity_location1);
+            viewHolder.locationText2 = (TextView)rowView.findViewById(R.id.main_activity_location2);
             viewHolder.background = (FrameLayout) rowView.findViewById(R.id.background);
             viewHolder.cardImage = (ImageView) rowView.findViewById(R.id.cardImage);
             rowView.setTag(viewHolder);
@@ -71,8 +76,15 @@ public class ActivityViewAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.DataText.setText(activityList.get(position).getDescription() + "");
+        viewHolder.nameText.setText(activityList.get(position).getActivityName());
+        viewHolder.descriptionText.setText(activityList.get(position).getDescription());
 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        String timeText = df.format(activityList.get(position).getDate());
+
+        viewHolder.timeText.setText(timeText);
+        viewHolder.locationText1.setText(activityList.get(position).getLocation_line1());
+        viewHolder.locationText2.setText(activityList.get(position).getLocation_line2());
         //Glide.with(activity.getApplicationContext()).load(activityList.get(position).getImage()).into(viewHolder.cardImage);
         viewHolder.cardImage.setImageBitmap(activityList.get(position).getImage());
 
